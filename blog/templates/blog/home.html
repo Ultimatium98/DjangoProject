@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block content%}
+    {% if not user.is_authenticated%}
+    <h1>Welcome to BlogChain!</h1>
+    <p>This blog uses kovan, an ethereum TestNet. Every post published is saved on a transaction. <a href="/register">Sign in</a> and try to publish something!</p>
+    {% else %}
+    {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                <p>Author: {{ post.user }}, Date: {{ post.datetime }}</p>
+            </div>
+            <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+            <p>{{ post.content|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% if status == "different" %}
+    <p>Different Ip from last time!</p>
+    <p>User {{user}}, IP: {{user.userprofile.ip}} </p>
+
+    {% endif %}
+{% endblock %}

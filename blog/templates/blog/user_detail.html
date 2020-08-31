@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="info">
+        <p> Name: {{ user.first_name }}</p>
+        <p> Surname: {{ user.last_name }}</p>
+        <p> Username: {{ user }} </p>
+        <p> Email: {{ user.email }}</p>
+        <p> Number of posts: {{ count }}</p>
+        <p> IP address: {{ user.userprofile.ip }}</p>
+    </div>
+    {% if count > 0 %}
+        <h3>Posts published by {{ user }}: </h3>
+        {% for post in posts %}
+            <div class="analytics">
+            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+            <p>{{ post.content|linebreaksbr }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

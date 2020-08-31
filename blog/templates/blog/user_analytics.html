@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% if user.is_staff %}
+        {% for entry in list %}
+            <p> User {{ entry.user }} published {{ entry.posts }} posts</p>
+        {% endfor %}
+    {% else %}
+        <h3>Can't access this area without staff permission!</h3>
+    {% endif%}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% if error %}
+        <p> {{ error }} </p>
+    {% else %}
+        {% if user.is_authenticated %}
+            <div class="new_post">
+             <h2>New post</h2>
+             <form method="POST" class="post-form">{% csrf_token %}
+                 {{ form.as_p }}
+                 <button type="submit" class="save btn btn-default">Save</button>
+             </form>
+            </div>
+            <h1>Posts</h1>
+            <br>
+            {% for post in posts %}
+                <div class="post">
+                        <div class="date">
+                            <p>Author: {{ post.user }}, Date: {{ post.datetime }}</p>
+                        </div>
+                        <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h3>
+                        <p>{{ post.content|linebreaksbr }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h3>You can't access this area if you don't login. Login <a href="/login">here!</a></h3>
+        {% endif %}
+    {% endif %}
+{% endblock %}
